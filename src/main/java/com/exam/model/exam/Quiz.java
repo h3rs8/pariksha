@@ -41,6 +41,9 @@ public class Quiz {
 	@OneToMany(mappedBy = "quiz",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JsonIgnore
 	private Set<Question> questions = new HashSet<>();
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	private Set<Result> results = new HashSet<>();
 
 	public Long getqId() {
 		return qId;
@@ -118,6 +121,14 @@ public class Quiz {
 
 	public void setQuestions(Set<Question> questions) {
 		this.questions = questions;
+	}
+
+	public Set<Result> getResults() {
+		return results;
+	}
+
+	public void setResults(Set<Result> results) {
+		this.results = results;
 	}
 	
 	

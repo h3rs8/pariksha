@@ -5,6 +5,7 @@ import java.util.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.exam.model.exam.Result;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.CascadeType;
@@ -29,11 +30,57 @@ public class User implements UserDetails{
 	
 	private String email;
 	private String phone;
+	private String forgot1;
+	private String forgot2;
 	
 	
+	public String getForgot1() {
+		return forgot1;
+	}
+
+
+
+
+	public void setForgot1(String forgot1) {
+		this.forgot1 = forgot1;
+	}
+
+
+
+
+	public String getForgot2() {
+		return forgot2;
+	}
+
+
+
+
+	public void setForgot2(String forgot2) {
+		this.forgot2 = forgot2;
+	}
+
+
+
+
 	private boolean enabled=true;
 	private String profile;
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	private Set<Result> results;
 	
+	public Set<Result> getResults() {
+		return results;
+	}
+
+
+
+
+	public void setResults(Set<Result> results) {
+		this.results = results;
+	}
+
+
+
+
 	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "user")
 	@JsonIgnore // to prevent circular dependency
 	private Set<UserRole> userRoles = new HashSet<>(); 

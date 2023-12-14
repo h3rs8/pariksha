@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -71,13 +73,12 @@ public class UserController {
 	public User updateUser(@RequestBody User user) throws Exception {
 		User u = this.userService.getUser(user.getUserName());
 		if(u!=null) {
+			if(user.getEmail()!=null)
 			u.setEmail(user.getEmail());
-			u.setFirstName(user.getFirstName());
-			u.setLastName(user.getLastName());
-			u.setPassword(this.bCryptPasswordEncoder.encode(user.getPassword()));
-			u.setPhone(user.getPhone());
-			u.setProfile(user.getProfile());
-			u.setUserRoles(user.getUserRoles());
+			if(user.getPassword()!=null)
+				u.setPassword(this.bCryptPasswordEncoder.encode(user.getPassword()));
+			if(user.getPhone()!=null)
+			u.setPhone(user.getPhone());			
 			this.userService.updateUser(u);
 			return u;
 						
@@ -101,7 +102,30 @@ Set<UserRole> ur = new HashSet<UserRole>();
 			
 			return userService.createuser(user, ur);
 		}
+	}
+	@PutMapping("/change")
+	public User changePhoneEmailUser(@RequestBody User user) throws Exception {
+			User u = this.userService.getUser(user.getUserName());
+			if(u!=null) {
+				if(user.getEmail()!=null)
+				u.setEmail(user.getEmail());
+				if(user.getPassword()!=null)
+					u.setPassword(this.bCryptPasswordEncoder.encode(user.getPassword()));
+				if(user.getPhone()!=null)
+				u.setPhone(user.getPhone());			
+				this.userService.updateUser(u);
+				return u;
+							
+				
+				
+				
+
+			}
+			else return null;
+			
+		
 				
 	}
+	
 
 }
